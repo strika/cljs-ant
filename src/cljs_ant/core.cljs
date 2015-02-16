@@ -5,8 +5,17 @@
 
 (println "Edits to this text should show up in your developer console.")
 
-;; define your app data so that it doesn't get over-written on reload
+(def refresh-rate 10) ; miliseconds
 
-(defonce app-state (atom {:text "Hello world!"}))
+(defonce world (atom {:paper (js/Raphael 0 0 500 500)}))
 
+(defn draw-world []
+  (let [paper (:paper @world)]
+    (. paper clear)
+    (-> (. paper (circle 50 50 10))
+        (. (attr "fill" "#00f")))))
+
+(defonce create-world
+  (do
+    (. js/window (setInterval (fn [] (draw-world)) refresh-rate))))
 

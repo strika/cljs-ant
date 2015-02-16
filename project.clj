@@ -30,6 +30,7 @@
              {:id "min"
               :source-paths ["src"]
               :compiler {:output-to "resources/public/js/compiled/cljs_ant.js"
+                         :externs ["resources/public/js/raphael-min.js"]
                          :main cljs-ant.core                         
                          :optimizations :advanced
                          :pretty-print false}}]}
