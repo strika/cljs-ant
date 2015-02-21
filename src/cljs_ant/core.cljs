@@ -9,12 +9,17 @@
 (def world-width (-> (.-body js/document) (.-clientWidth)))
 (def world-height (-> (.-body js/document) (.-clientHeight)))
 
+(defn random-ant-direction []
+  :up)
+
 (defn generate-ant [max-x max-y]
   {:x (Math/round (rand max-x))
-   :y (Math/round (rand max-y))})
+   :y (Math/round (rand max-y))
+   :direction (random-ant-direction)})
 
 (defn generate-world []
   {:paper (js/Raphael 0 0 world-width world-height)
+   :world []
    :ant (generate-ant world-width world-height)})
 
 (defonce world (atom (generate-world)))
