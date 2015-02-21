@@ -5,7 +5,8 @@
 
 (println "Edits to this text should show up in your developer console.")
 
-(def refresh-rate 10) ; miliseconds
+(def refresh-rate 200) ; miliseconds
+(def ant-size 10) ; px
 (def world-width (-> (.-body js/document) (.-clientWidth)))
 (def world-height (-> (.-body js/document) (.-clientHeight)))
 
@@ -19,18 +20,23 @@
 
 (defn generate-world []
   {:paper (js/Raphael 0 0 world-width world-height)
-   :world []
+   :live-cells []
    :ant (generate-ant world-width world-height)})
 
 (defonce world (atom (generate-world)))
 
-(defn draw-world []
-  (let [paper (:paper @world)]
-    (. paper clear)
-    (-> (. paper (circle 50 50 10))
-        (. (attr "fill" "#00f")))))
+(defn draw-cells [paper live-cells]
+  (doseq [cell live-cells]
+    (. paper rect (:x cell) (:y cell) ant-size ant-size)))
 
-(defn update-world [])
+(defn draw-world []
+  (let [paper (:paper @world)
+        live-cells (:live-cells @world)]
+    (. paper clear)
+    (draw-cells paper live-cells)))
+
+(defn update-world []
+  (swap! world assoc :live-cells [{:x 100 :y 100} {:x 200 :y 200}]))
 
 (defn loop-world []
   (update-world)
