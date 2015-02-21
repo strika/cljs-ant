@@ -16,13 +16,20 @@
    :direction (random-ant-direction)})
 
 (defn generate-world []
-  {:live-cells []
+  {:live-cells #{}
    :ant (generate-ant world-width world-height)})
 
 (defonce world (atom (generate-world)))
 
+(defn move-ant [world]
+  (let [ant (:ant world)
+        live-cells (:live-cells world)]
+    (-> world
+        (assoc :ant ant)
+        (assoc :live-cells (conj live-cells ant)))))
+
 (defn update-world [world]
-  (swap! world assoc :live-cells [{:x 100 :y 100} {:x 100 :y 200}]))
+  (swap! world move-ant))
 
 (defn loop-world []
   (update-world world)

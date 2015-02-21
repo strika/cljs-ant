@@ -12,6 +12,7 @@
 (defonce view (atom {:paper (generate-paper)}))
 
 (defn draw-cells [paper live-cells]
+  (println "Drawing cells..." (count live-cells))
   (doseq [cell live-cells]
     (-> (. paper rect (:x cell) (:y cell) ant-size ant-size)
         (. attr "fill" ant-color))))
@@ -20,3 +21,4 @@
   (let [paper (:paper @view)]
     (. paper clear)
     (draw-cells paper live-cells)))
+
