@@ -1,19 +1,20 @@
 (ns ^:figwheel-always cljs-ant.core
   (:require [cljs-ant.ant :refer [move-ant]]
-            [cljs-ant.world-view :refer [draw-world world-width world-height]]))
+            [cljs-ant.world-view :refer [max-ant-x max-ant-y
+                                         draw-world world-width world-height]]))
 
 (enable-console-print!)
 
 (println "Edits to this text should show up in your developer console.")
 
-(def refresh-rate 1) ; miliseconds
+(def refresh-rate 200) ; miliseconds
 
 (defn random-ant-direction []
   :up)
 
 (defn generate-ant [max-x max-y]
-  {:x (Math/round (rand max-x))
-   :y (/ (Math/round (rand max-y)) 2)
+  {:x (Math/round (rand max-ant-x))
+   :y (Math/round (rand max-ant-y))
    :direction (random-ant-direction)})
 
 (defn generate-world []

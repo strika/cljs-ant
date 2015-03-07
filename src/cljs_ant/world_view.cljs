@@ -5,6 +5,8 @@
 (def ant-color "#00f")
 (def world-width (-> (.-body js/document) (.-clientWidth)))
 (def world-height (.-innerHeight js/window))
+(def max-ant-x (/ world-width ant-size))
+(def max-ant-y (/ world-height ant-size))
 
 (defn- generate-paper []
   (js/Raphael "paper" world-width world-height))
@@ -13,9 +15,11 @@
 
 (defn- draw-cells [paper live-cells]
   (doseq [cell live-cells]
-    (-> (. paper rect (:x cell) (:y cell) ant-size ant-size)
-        (. attr "stroke" "#fff")
-        (. attr "fill" ant-color))))
+    (let [x (* (:x cell) ant-size)
+          y (* (:y cell) ant-size)]
+      (-> (. paper rect x y ant-size ant-size)
+          (. attr "stroke" "#fff")
+          (. attr "fill" ant-color)))))
 
 (defn draw-world [live-cells]
   (let [paper (:paper @view)]

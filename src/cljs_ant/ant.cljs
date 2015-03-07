@@ -1,5 +1,5 @@
 (ns ^:figwheel-always cljs-ant.ant
-  (:require [cljs-ant.world-view :refer [ant-size]]))
+  (:require))
 
 (defn- ant-position [world]
   {:x (get-in world [:ant :x])
@@ -49,13 +49,11 @@
     (revive-cell world)))
 
 (defn- move-ant-forward [world]
-  (let [x (get-in world [:ant :x])
-        y (get-in world [:ant :y])]
-    (condp = (ant-direction world)
-      :up    (update-in world [:ant :y] #(- % ant-size))
-      :right (update-in world [:ant :x] #(+ % ant-size))
-      :down  (update-in world [:ant :y] #(+ % ant-size))
-      :left  (update-in world [:ant :x] #(- % ant-size)))))
+  (condp = (ant-direction world)
+    :up    (update-in world [:ant :y] #(- % 1))
+    :right (update-in world [:ant :x] #(+ % 1))
+    :down  (update-in world [:ant :y] #(+ % 1))
+    :left  (update-in world [:ant :x] #(- % 1))))
 
 (defn move-ant [world]
   (let [ant (:ant world)
