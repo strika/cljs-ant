@@ -7,7 +7,7 @@
 
 (println "Edits to this text should show up in your developer console.")
 
-(def refresh-rate 200) ; miliseconds
+(def refresh-rate 100) ; miliseconds
 
 (defn random-ant-direction []
   :up)
