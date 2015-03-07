@@ -4,17 +4,17 @@
 (def ant-size 10) ; px
 (def ant-color "#00f")
 (def world-width (-> (.-body js/document) (.-clientWidth)))
-(def world-height (-> (.-body js/document) (.-clientHeight)))
+(def world-height (.-innerHeight js/window))
 
-(defn generate-paper []
+(defn- generate-paper []
   (js/Raphael "paper" world-width world-height))
 
 (defonce view (atom {:paper (generate-paper)}))
 
-(defn draw-cells [paper live-cells]
-  (println "Drawing cells..." (count live-cells))
+(defn- draw-cells [paper live-cells]
   (doseq [cell live-cells]
     (-> (. paper rect (:x cell) (:y cell) ant-size ant-size)
+        (. attr "stroke" "#fff")
         (. attr "fill" ant-color))))
 
 (defn draw-world [live-cells]
